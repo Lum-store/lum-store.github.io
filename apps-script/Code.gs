@@ -79,6 +79,7 @@ function tgMessage_(b) {
   if (/^https?:\/\//i.test(link)) {
     lines.push("🔗 <a href=\"" + tgEsc_(link) + "\">Mở đúng mẫu túi khách đặt</a>");
   }
+  if (b.shipping && Number(b.shipping) > 0) lines.push("🚚 Phí ship: " + tgMoney_(b.shipping));
   if (b.note) lines.push("📝 " + tgEsc_(b.note));
   const src = [];
   if (b.utmSource) src.push(tgEsc_(b.utmSource));

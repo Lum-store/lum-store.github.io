@@ -43,6 +43,7 @@
           return {
             value: String(o.value || o.name || o.label || "").trim(),
             price: (o.price != null && o.price !== "") ? Number(o.price) : (p.price || 0),
+            oldPrice: (o.oldPrice != null && o.oldPrice !== "") ? Number(o.oldPrice) : 0,
             count: (o.count != null && o.count !== "") ? Number(o.count) : 1
           };
         }).filter((o) => o.value);
@@ -262,6 +263,7 @@
     return {
       value: String(o.value || o.name || o.label || "").trim(),
       price: (o.price != null && o.price !== "") ? Number(o.price) : (fallback || 0),
+      oldPrice: (o.oldPrice != null && o.oldPrice !== "") ? Number(o.oldPrice) : 0,
       count: (o.count != null && o.count !== "") ? Number(o.count) : 1
     };
   }
@@ -299,17 +301,20 @@
         const vI = document.createElement("input");
         vI.type = "text"; vI.value = o.value; vI.placeholder = "Tên biến thể (VD: Combo 10 cái)";
         const pI = document.createElement("input");
-        pI.type = "number"; pI.value = o.price; pI.placeholder = "Giá (đ)";
+        pI.type = "number"; pI.value = o.price; pI.placeholder = "Giá bán (đ)";
+        const oI = document.createElement("input");
+        oI.type = "number"; oI.value = o.oldPrice || ""; oI.placeholder = "Giá gốc (đ)";
         const cI = document.createElement("input");
         cI.type = "number"; cI.value = o.count; cI.placeholder = "Số cái/gói";
         const delO = document.createElement("button");
         delO.className = "adm-x"; delO.type = "button"; delO.title = "Xoá";
         delO.textContent = "✕";
         delO.onclick = () => { g.options.splice(oi, 1); renderVariants(); markDirty(); };
-        vI.oninput = () => { o.value = vI.value; g.options[oi] = normOpt({ value: vI.value, price: pI.value, count: cI.value }, p.price); markDirty(); };
+        vI.oninput = () => { o.value = vI.value; g.options[oi] = normOpt({ value: vI.value, price: pI.value, oldPrice: oI.value, count: cI.value }, p.price); markDirty(); };
         pI.oninput = () => { o.price = Number(pI.value) || 0; g.options[oi].price = o.price; markDirty(); };
+        oI.oninput = () => { o.oldPrice = Number(oI.value) || 0; g.options[oi].oldPrice = o.oldPrice; markDirty(); };
         cI.oninput = () => { o.count = Number(cI.value) || 1; g.options[oi].count = o.count; markDirty(); };
-        orow.appendChild(vI); orow.appendChild(pI); orow.appendChild(cI); orow.appendChild(delO);
+        orow.appendChild(vI); orow.appendChild(pI); orow.appendChild(oI); orow.appendChild(cI); orow.appendChild(delO);
         optsBox.appendChild(orow);
       });
       const addOpt = document.createElement("button");

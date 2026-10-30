@@ -123,7 +123,7 @@
 .adm-var-head { display: grid; grid-template-columns: 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }
 .adm-var-head input { width: 100%; border: 1.5px solid var(--line); border-radius: 9px; padding: 8px 10px; font: inherit; font-size: 13px; outline: none; }
 .adm-var-opts { display: flex; flex-direction: column; gap: 6px; }
-.adm-var-opt { display: grid; grid-template-columns: 1.6fr 0.9fr 0.7fr auto; gap: 6px; align-items: center; }
+.adm-var-opt { display: grid; grid-template-columns: 1.6fr 0.9fr 0.9fr 0.7fr auto; gap: 6px; align-items: center; }
 .adm-var-opt input { width: 100%; border: 1.5px solid var(--line); border-radius: 9px; padding: 7px 9px; font: inherit; font-size: 12.5px; outline: none; }
 .adm-var-opt input:focus, .adm-var-head input:focus { border-color: var(--brand); }
 .adm-var { display: grid; grid-template-columns: 150px 1fr auto; gap: 8px; margin-bottom: 8px; align-items: center; }

@@ -287,11 +287,28 @@
           if (out) out.textContent = btn.getAttribute("data-value") || btn.textContent.trim();
           // cập nhật giá theo biến thể được chọn
           var price = Number(btn.getAttribute("data-price") || 0);
+          var oldPrice = Number(btn.getAttribute("data-oldprice") || 0);
+          var shipping = Number(btn.getAttribute("data-shipping") || 0);
           if (price > 0) {
             var input = $("#qtyInput");
-            if (input) { input.setAttribute("data-unit", price); }
+            if (input) { input.setAttribute("data-unit", price); input.setAttribute("data-shipping", shipping); }
             var priceEl = $(".price-box .price");
             if (priceEl) priceEl.textContent = money(price);
+            // giá gốc gạch + % tiết kiệm theo biến thể
+            var row = $(".price-box .row");
+            if (row) {
+              var oldEl = row.querySelector(".price-old");
+              var saveEl = row.querySelector(".save");
+              if (oldPrice > price) {
+                if (!oldEl) { oldEl = document.createElement("span"); oldEl.className = "price-old"; row.appendChild(oldEl); }
+                oldEl.textContent = money(oldPrice);
+                if (!saveEl) { saveEl = document.createElement("span"); saveEl.className = "save"; row.appendChild(saveEl); }
+                saveEl.textContent = "Tiết kiệm " + Math.max(0, Math.round((1 - price / oldPrice) * 100)) + "%";
+              } else {
+                if (oldEl) oldEl.remove();
+                if (saveEl) saveEl.remove();
+              }
+            }
             var syncFn = input && input._sync;
             if (typeof syncFn === "function") syncFn();
           }
@@ -310,12 +327,14 @@
     if (!input) return;
     function sync() {
       var unit = Number(input.getAttribute("data-unit") || 0);
+      var shipping = Number(input.getAttribute("data-shipping") || 0);
       var q = Math.max(1, Math.min(99, parseInt(input.value, 10) || 1));
       input.value = q;
+      var total = unit * q + shipping;
       var totalEl = $("#formTotal");
-      if (totalEl) totalEl.textContent = money(unit * q);
+      if (totalEl) totalEl.textContent = money(total);
       var sb = $("#sbPrice");
-      if (sb) sb.textContent = money(unit * q);
+      if (sb) sb.textContent = money(total);
     }
     input._sync = sync;
     $$(".qty button").forEach(function (b) {
@@ -655,6 +674,7 @@
       var note = ($("#fNote") || {}).value || "";
       var qty = parseInt((($("#qtyInput") || {}).value || 1), 10) || 1;
       var unit = Number((($("#qtyInput") || {}).getAttribute) ? $("#qtyInput").getAttribute("data-unit") : 0) || 0;
+      var shipping = Number((($("#qtyInput") || {}).getAttribute) ? $("#qtyInput").getAttribute("data-shipping") : 0) || 0;
 
       function fail(msg) {
         if (errEl) { errEl.textContent = msg; errEl.classList.add("show"); }
@@ -679,7 +699,8 @@
         variant: selectedVariant(),
         qty: qty,
         unitPrice: unit,
-        total: unit * qty,
+        total: unit * qty + shipping,
+        shipping: shipping,
         name: name.trim(),
         phone: phone,
         address: address.trim(),
