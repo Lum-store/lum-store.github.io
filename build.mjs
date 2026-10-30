@@ -96,7 +96,7 @@ ${image ? `<meta property="og:image" content="${esc(image)}">` : ""}
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="26" fill="#ff4d1c"/><text x="50" y="70" font-size="58" font-family="Arial" font-weight="bold" fill="#fff" text-anchor="middle">L</text></svg>'
   )}">
 <script>
-window.LUM_CONFIG = ${JSON.stringify({ brand: B.name, phone: B.phone, sheetEndpoint: B.sheetEndpoint || "" })};
+window.LUM_CONFIG = ${JSON.stringify({ brand: B.name, phone: B.phone, sheetEndpoint: B.sheetEndpoint || "", shop: B.shop || "" })};
 ${B.fbPixel ? `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${esc(B.fbPixel)}');fbq('track','PageView');` : ""}
 </script>
 ${extra}
@@ -204,7 +204,7 @@ function homePage() {
   }).join("\n      ");
   return `${head({
     title: `${B.name} – ${B.tagline}`,
-    desc: "Túi xách nữ mini Kelly, kẹp nách, jelly, Boston ren… chọn lọc giá tận gốc. Giao toàn quốc, kiểm hàng trước khi thanh toán, đổi trả 7 ngày.",
+    desc: B.desc || "Sản phẩm chọn lọc giá tận gốc. Giao toàn quốc, kiểm hàng trước khi thanh toán, đổi trả 7 ngày.",
     image: PRODUCTS[0] ? PRODUCTS[0].images[0] : "",
     base
   })}
@@ -212,11 +212,11 @@ function homePage() {
 ${header(base)}
 <section class="hero">
   <div class="container hero-in">
-    <span class="eyebrow">🔥 Túi mới về mỗi tuần</span>
-    <h1>Túi xách nữ xinh,<br><em>chốt đơn trong 30 giây</em></h1>
-    <p>Tuyển chọn những mẫu túi đang được săn nhiều nhất: mini Kelly, kẹp nách, jelly, Boston ren… Giá đã gồm ship, được kiểm hàng trước khi trả tiền.</p>
+    <span class="eyebrow">${esc(B.heroEyebrow || "🔥 Mới về mỗi tuần")}</span>
+    <h1>${B.heroTitle || "Sản phẩm chất lượng,<br><em>giá tận gốc</em>"}</h1>
+    <p>${esc(B.heroDesc || "Tuyển chọn những sản phẩm đang được săn nhiều nhất. Giá đã gồm ship, được kiểm hàng trước khi trả tiền.")}</p>
     <div class="hero-cta">
-      <a class="btn btn-primary" href="#san-pham">Xem 10 mẫu túi ↓</a>
+      <a class="btn btn-primary" href="#san-pham">${esc(B.heroCta || "Xem sản phẩm ↓")}</a>
       <a class="btn btn-ghost" href="tel:${B.phone}">Gọi tư vấn</a>
     </div>
     <div class="hero-trust">
@@ -232,8 +232,8 @@ ${header(base)}
   <div class="container">
     <div class="section-head">
       <div>
-        <h2>Sản phẩm đang bán chạy</h2>
-        <p>Bấm vào sản phẩm để xem chi tiết và đặt hàng</p>
+        <h2>${esc(B.sectionTitle || "Sản phẩm đang bán")}</h2>
+        <p>${esc(B.sectionDesc || "Bấm vào sản phẩm để xem chi tiết và đặt hàng")}</p>
       </div>
     </div>
     <div class="grid">
@@ -306,11 +306,22 @@ function productPage(p, index) {
       <button class="thumb thumb-video is-active" data-video="${base}/${p.video}" data-poster="${base}/${vPoster}" aria-label="Video sản phẩm"><img src="${base}/${vPoster}" alt="${esc(p.name)} - video" loading="lazy"><span class="thumb-play">▶</span></button>` : "")
     + p.images.map((src, i) => `
       <button class="thumb${!hasVideo && i === 0 ? " is-active" : ""}" data-idx="${i}" data-src="${base}/${src}" aria-label="Ảnh ${i + 1}"><img src="${base}/${src}" alt="${esc(p.name)} - ảnh ${i + 1}" loading="lazy"></button>`).join("");
-  const variantHtml = (p.variants || []).map((g) => `
+  const normOpt = (o) => {
+    if (typeof o === "string") o = { value: o };
+    const price = (o.price != null && o.price !== "") ? Number(o.price) : p.price;
+    const count = (o.count != null && o.count !== "") ? Number(o.count) : 1;
+    return { value: String(o.value || o.name || o.label || "").trim(), price, count };
+  };
+  const normGroups = (p.variants || []).map((g) => ({
+    name: g.name || "Phân loại",
+    options: (g.options || []).map(normOpt).filter((o) => o.value)
+  })).filter((g) => g.options.length);
+  const firstPrice = normGroups.length && normGroups[0].options.length ? normGroups[0].options[0].price : p.price;
+  const variantHtml = normGroups.map((g) => `
       <div class="opt-group">
-        <label class="opt-label">${esc(g.name)}: <span data-selected="${esc(g.name)}">${esc(g.options[0] || "")}</span></label>
+        <label class="opt-label">${esc(g.name)}: <span data-selected="${esc(g.name)}">${esc(g.options[0].value)}</span></label>
         <div class="chips" data-group="${esc(g.name)}">
-          ${g.options.map((o, i) => `<button type="button" class="opt${i === 0 ? " is-active" : ""}" data-value="${esc(o)}">${esc(o)}</button>`).join("")}
+          ${g.options.map((o, i) => `<button type="button" class="opt${i === 0 ? " is-active" : ""}" data-value="${esc(o.value)}" data-price="${o.price}" data-count="${o.count}">${esc(o.value)}${o.price !== p.price ? ` · ${money(o.price)}` : ""}</button>`).join("")}
         </div>
       </div>`).join("");
 
@@ -339,7 +350,7 @@ ${header(base)}
   <div class="pdp-gallery">
     <div class="gallery-main" id="galleryMain">
       <img id="galleryImg" src="${base}/${p.images[0]}" alt="${esc(p.name)}" width="800" height="800"${hasVideo ? " hidden" : ""}>
-      ${hasVideo ? `<video id="galleryVideo" class="gallery-video" src="${base}/${p.video}" poster="${base}/${vPoster}" autoplay loop muted controls playsinline webkit-playsinline x5-playsinline="true" x5-video-player-type="h5"></video>
+      ${hasVideo ? `<video id="galleryVideo" class="gallery-video" src="${base}/${p.video}" poster="${base}/${vPoster}" autoplay muted controls playsinline webkit-playsinline x5-playsinline="true" x5-video-player-type="h5"></video>
       <button class="gallery-play" id="galleryPlay" type="button" aria-label="Xem video sản phẩm" hidden><span class="gallery-play-ico">▶</span><span class="gallery-play-tx">Xem video sản phẩm</span></button>
       <span class="gallery-progress" id="galleryProgress" hidden><i></i></span>` : ""}
       ${p.images.length > 1 ? `<span class="gallery-count" id="galleryCount">${hasVideo ? "Video" : "1/" + p.images.length}</span>` : ""}
@@ -368,7 +379,7 @@ ${header(base)}
       <label class="opt-label">Số lượng</label>
       <div class="qty">
         <button type="button" data-step="-1" aria-label="Giảm">−</button>
-        <input id="qtyInput" type="number" inputmode="numeric" value="1" min="1" max="99" data-unit="${p.price}" aria-label="Số lượng">
+        <input id="qtyInput" type="number" inputmode="numeric" value="1" min="1" max="99" data-unit="${firstPrice}" aria-label="Số lượng">
         <button type="button" data-step="1" aria-label="Tăng">+</button>
       </div>
     </div>

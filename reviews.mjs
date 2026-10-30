@@ -66,6 +66,38 @@ const R5 = [
   "Da mềm, không bị cứng như túi rẻ tiền. Cầm lên là thấy khác liền."
 ];
 
+const R5C = [
+  "Giac hoi silicon mem, bam da tot, hut rat deu. Dung 5 phut la thay nhe vai gay.",
+  "Khong can lua nen an toan, dung tai nha cung duoc. Silicon mem mai, khong dau.",
+  "Giao nhanh, dong goi ky, dung mau. Giac hoi silicon nay hut manh hon loai nhua cung.",
+  "Dung di gio rat ok, da do deu, khong bi rop. Se mua them cho gia dinh.",
+  "Chat silicon deo, de bop tao luc hut. Khong bi tuot khi di chuyen tren lung.",
+  "Shop tu van nhiet tinh, giao 2 ngay la nhan. San pham dung mo ta, gia hop ly.",
+  "Mua cho me dung, me khen nhieu. Giac hoi silicon nay sach se, de ve sinh.",
+  "Hut deu, khong bi dau nhu giac hoi lua. Dung xong da hong hao, thu gian.",
+  "Combo 10 cai gia tot, chia cho ca nha. Silicon mem, khong bi bien dang.",
+  "Dong goi can than, co huong dan su dung. San pham dung hinh anh.",
+  "Dung massage vai gay rat hieu qua, giam dau ro ret sau 1 tuan.",
+  "Silicon cao cap, khong co mui nhua. Hut manh nhung khong de lai vet lau.",
+  "Giao hang dung hen, shipper than thien. San pham nhu mo ta.",
+  "Mua lan 2 roi, chat luong on dinh. Se tiep tuc ung ho shop.",
+  "Giac hoi silicon nay de dung, khong can ky thuat. Phu hop nguoi moi.",
+  "Hut deu khap lung, giam dau nhuc ro ret. Rat hai long.",
+  "Chat lieu mem mai, khong gay kich ung da. Dung cho ca nguoi gia.",
+  "Gia re ma chat luong tot. Mua combo 10 cai tiet kiem nhieu.",
+  "Shop giao nhanh, dong goi ky. San pham dung mau, dung so luong.",
+  "Giac hoi silicon khong lua an toan cho gia dinh co tre nho."
+];
+
+const R4C = [
+  "Hang dep, silicon mem. Giao cham 1 ngay so voi du kien nhung van ok.",
+  "San pham tot, hut manh. Mau ngoai hoi khac anh mot chut nhung van dep.",
+  "Dung duoc, silicon mem. Hut hoi manh so voi mong doi nhung quen dan.",
+  "Dong goi ky, giao hoi cham. Chat luong san pham tot.",
+  "Hut deu, silicon mem. Gia hop ly. Se mua them."
+];
+
+
 const R4 = [
   "Hàng đẹp, đúng mẫu. Giao hơi chậm 1 ngày so với dự kiến nhưng vẫn ok.",
   "Túi xinh, chỉ là màu ngoài đời đậm hơn ảnh một chút. Mình vẫn dùng tốt.",
@@ -91,7 +123,7 @@ const R3 = [
 ];
 
 const R2 = [
-  "Đặt màu đen, nhận màu nâu, đổi lại mất gần 1 tuần. Túi thì không lỗi.",
+  "Đặt màu đen, nhận màu nâu, đổi lại mất gần 1 tuần. Sản phẩm thì không lỗi.",
   "Giao sai mẫu hoàn toàn, phải chờ đổi 5 ngày. Hàng đúng thì đẹp.",
   "Hẹn giao 3 ngày mà 9 ngày mới nhận, lại còn sai màu. Shop có đổi nhưng mất thời gian."
 ];
@@ -150,7 +182,10 @@ export function makeReviews(product) {
   let i3 = 0, i2 = 0;
   const reviews = stars.map((s) => {
     const name = pick(HO) + " " + pick(DEM) + " " + pick(TEN);
-    const pool = s === 5 ? R5 : s === 4 ? R4 : s === 3 ? R3 : R2;
+    const theme = product.reviewTheme || "bag";
+  const R5Pool = theme === "cupping" ? R5C : R5;
+  const R4Pool = theme === "cupping" ? R4C : R4;
+  const pool = s === 5 ? R5Pool : s === 4 ? R4Pool : s === 3 ? R3 : R2;
     const text = s === 3 ? R3[i3++ % R3.length] : s === 2 ? R2[i2++ % R2.length] : pick(pool);
     const days = Math.floor(rand() * 300) + 1;
     const d = new Date(now - days * 86400000);

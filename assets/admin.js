@@ -34,6 +34,21 @@
     DB = await r.json();
     DB.brand = DB.brand || {};
     DB.products = DB.products || [];
+    DB.products.forEach((p) => {
+      p.variants = (p.variants || []).map((g) => {
+        g = g || {};
+        const opts = (g.options || []).map((o) => {
+          if (typeof o === "string") o = { value: o };
+          o = o || {};
+          return {
+            value: String(o.value || o.name || o.label || "").trim(),
+            price: (o.price != null && o.price !== "") ? Number(o.price) : (p.price || 0),
+            count: (o.count != null && o.count !== "") ? Number(o.count) : 1
+          };
+        }).filter((o) => o.value);
+        return { name: g.name || "Phân loại", options: opts };
+      });
+    });
     renderList();
     if (DB.products.length) select(0);
     fillBrand();
@@ -241,27 +256,73 @@
   }
 
   /* ---------- variants ---------- */
+  function normOpt(o, fallback) {
+    if (typeof o === "string") o = { value: o };
+    o = o || {};
+    return {
+      value: String(o.value || o.name || o.label || "").trim(),
+      price: (o.price != null && o.price !== "") ? Number(o.price) : (fallback || 0),
+      count: (o.count != null && o.count !== "") ? Number(o.count) : 1
+    };
+  }
   function renderVariants() {
     const p = DB.products[cur];
     const box = $("#variantList");
     box.innerHTML = "";
     (p.variants || []).forEach((g, idx) => {
-      const row = document.createElement("div");
-      row.className = "adm-var";
-      row.innerHTML = `
-        <input type="text" value="${escapeHtml(g.name || "")}" placeholder="Tên nhóm (VD: Màu sắc)">
-        <input type="text" value="${escapeHtml((g.options || []).join(", "))}" placeholder="Đen, Trắng, Hồng">
-        <button class="adm-x" type="button" title="Xoá">✕</button>`;
-      const [nameI, optI] = row.querySelectorAll("input");
+      const group = document.createElement("div");
+      group.className = "adm-var-group";
+      const head = document.createElement("div");
+      head.className = "adm-var-head";
+      const nameI = document.createElement("input");
+      nameI.type = "text";
+      nameI.value = g.name || "";
+      nameI.placeholder = "Tên nhóm (VD: Phân loại)";
+      const delG = document.createElement("button");
+      delG.className = "adm-x";
+      delG.type = "button";
+      delG.title = "Xoá nhóm";
+      delG.textContent = "✕";
+      delG.onclick = () => { p.variants.splice(idx, 1); renderVariants(); markDirty(); };
+      head.appendChild(nameI);
+      head.appendChild(delG);
+      group.appendChild(head);
       nameI.oninput = () => { g.name = nameI.value; markDirty(); };
-      optI.oninput = () => {
-        g.options = optI.value.split(",").map((s) => s.trim()).filter(Boolean);
-        markDirty();
+
+      const optsBox = document.createElement("div");
+      optsBox.className = "adm-var-opts";
+      const opts = (g.options || []).map((o) => normOpt(o, p.price));
+      g.options = opts;
+      opts.forEach((o, oi) => {
+        const orow = document.createElement("div");
+        orow.className = "adm-var-opt";
+        const vI = document.createElement("input");
+        vI.type = "text"; vI.value = o.value; vI.placeholder = "Tên biến thể (VD: Combo 10 cái)";
+        const pI = document.createElement("input");
+        pI.type = "number"; pI.value = o.price; pI.placeholder = "Giá (đ)";
+        const cI = document.createElement("input");
+        cI.type = "number"; cI.value = o.count; cI.placeholder = "Số cái/gói";
+        const delO = document.createElement("button");
+        delO.className = "adm-x"; delO.type = "button"; delO.title = "Xoá";
+        delO.textContent = "✕";
+        delO.onclick = () => { g.options.splice(oi, 1); renderVariants(); markDirty(); };
+        vI.oninput = () => { o.value = vI.value; g.options[oi] = normOpt({ value: vI.value, price: pI.value, count: cI.value }, p.price); markDirty(); };
+        pI.oninput = () => { o.price = Number(pI.value) || 0; g.options[oi].price = o.price; markDirty(); };
+        cI.oninput = () => { o.count = Number(cI.value) || 1; g.options[oi].count = o.count; markDirty(); };
+        orow.appendChild(vI); orow.appendChild(pI); orow.appendChild(cI); orow.appendChild(delO);
+        optsBox.appendChild(orow);
+      });
+      const addOpt = document.createElement("button");
+      addOpt.className = "adm-btn ghost sm";
+      addOpt.type = "button";
+      addOpt.textContent = "+ Thêm biến thể";
+      addOpt.onclick = () => {
+        g.options.push(normOpt({ value: "Mặc định", price: p.price, count: 1 }, p.price));
+        renderVariants(); markDirty();
       };
-      row.querySelector("button").onclick = () => {
-        p.variants.splice(idx, 1); renderVariants(); markDirty();
-      };
-      box.appendChild(row);
+      optsBox.appendChild(addOpt);
+      group.appendChild(optsBox);
+      box.appendChild(group);
     });
   }
 
@@ -439,7 +500,7 @@
     $("#addVariant").onclick = () => {
       const p = DB.products[cur];
       p.variants = p.variants || [];
-      p.variants.push({ name: "Phân loại", options: ["Mặc định"] });
+      p.variants.push({ name: "Phân loại", options: [{ value: "Mặc định", price: p.price || 0, count: 1 }] });
       renderVariants(); markDirty();
     };
     $("#addSpec").onclick = () => {
@@ -530,7 +591,7 @@
         badge: "",
         active: true,
         images: [`assets/img/${slug}/1.svg`],
-        variants: [{ name: "Phân loại", options: ["Mặc định"] }],
+        variants: [{ name: "Phân loại", options: [{ value: "Mặc định", price: 0, count: 1 }] }],
         specs: [],
         description: ""
       });

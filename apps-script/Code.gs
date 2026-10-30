@@ -3,7 +3,12 @@
  * Dán toàn bộ file này vào Google Apps Script (script.google.com) của Sheet bạn muốn dùng.
  */
 
-const SHEET_NAME = "DonHang";
+const SHEET_NAME = "DonHang";   // mặc định (web túi xách)
+
+function sheetNameFor_(shop) {
+  if (shop === "giac-hoi") return "DonHangGiacHoi";
+  return SHEET_NAME;
+}
 
 /* Sheet đích. Để trống "" nếu script gắn trực tiếp trong Sheet (container-bound).
  * Nếu tạo script độc lập (script.google.com/home) thì dán ID file Sheet vào đây.
@@ -58,8 +63,9 @@ function tgMoney_(n) {
 
 function tgMessage_(b) {
   const phone = String(b.phone || "");
+  const title = (b.shop === "giac-hoi") ? "🛍️ ĐƠN GIÁC HƠI" : "🛍️ ĐƠN HÀNG MỚI";
   const lines = [
-    "🛍️ <b>ĐƠN HÀNG MỚI</b> · <code>" + tgEsc_(b.orderCode || "") + "</code>",
+    title + " · <code>" + tgEsc_(b.orderCode || "") + "</code>",
     "",
     "👤 <b>" + tgEsc_(b.name || "") + "</b>",
     "📞 <a href=\"tel:" + tgEsc_(phone) + "\">" + tgEsc_(phone) + "</a>",
@@ -84,7 +90,7 @@ function tgMessage_(b) {
 
 /** Chạy hàm này trong editor để thử bot (gửi 1 tin mẫu) */
 function testTelegram() {
-  getSheet_(); // tạo sẵn tab DonHang nếu chưa có
+  getSheet_(""); // tạo sẵn tab DonHang nếu chưa có
   const r = tgSend_("✅ <b>Lụm Store</b> đã kết nối Telegram!\nĐơn mới sẽ bắn về đây.");
   Logger.log(JSON.stringify(r));
   return r;
@@ -96,10 +102,11 @@ const HEADERS = [
   "Link sản phẩm"
 ];
 
-function getSheet_() {
+function getSheet_(shop) {
   const ss = ss_();
-  let sh = ss.getSheetByName(SHEET_NAME);
-  if (!sh) sh = ss.insertSheet(SHEET_NAME);
+  const name = (shop === "giac-hoi") ? "DonHangGiacHoi" : SHEET_NAME;
+  let sh = ss.getSheetByName(name);
+  if (!sh) sh = ss.insertSheet(name);
 
   if (sh.getLastRow() === 0) {
     sh.appendRow(HEADERS);
@@ -133,7 +140,7 @@ function doPost(e) {
       body = JSON.parse(e.postData.contents);
     }
 
-    const sh = getSheet_();
+    const sh = getSheet_(body.shop);
     const tz = Session.getScriptTimeZone();
     const now = body.createdAt ? new Date(body.createdAt) : new Date();
 

@@ -10,7 +10,15 @@
     "address": "Yên Chính, Phong Doanh, Ninh Bình",
     "sheetEndpoint": "https://script.google.com/macros/s/AKfycbzNQ9Neiyrie5w6OQFu_LAz6MfSfgszlPtmGEOjYSBCfm2hlCIatzBsWF3-S3H1I7Hs/exec",
     "fbPixel": "1490463016261519",
-    "currency": "đ"
+    "currency": "đ",
+    "shop": "tui",
+    "heroEyebrow": "🔥 Túi mới về mỗi tuần",
+    "heroTitle": "Túi xách nữ xinh,<br><em>chốt đơn trong 30 giây</em>",
+    "heroDesc": "Tuyển chọn những mẫu túi đang được săn nhiều nhất: mini Kelly, kẹp nách, jelly, Boston ren… Giá đã gồm ship, được kiểm hàng trước khi trả tiền.",
+    "heroCta": "Xem 10 mẫu túi ↓",
+    "sectionTitle": "Sản phẩm đang bán chạy",
+    "sectionDesc": "Bấm vào sản phẩm để xem chi tiết và đặt hàng",
+    "desc": "Túi xách nữ mini Kelly, kẹp nách, jelly, Boston ren… chọn lọc giá tận gốc. Giao toàn quốc, kiểm hàng trước khi thanh toán, đổi trả 7 ngày."
   },
   "products": [
     {

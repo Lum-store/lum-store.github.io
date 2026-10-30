@@ -126,7 +126,7 @@
     var prog = $("#galleryProgress");
     var progFill = prog ? $("i", prog) : null;
     if (vid) {
-      vid.loop = true;
+      vid.loop = false;
       vid.muted = true;
       vid.controls = true;
       ["playing", "pause", "ended", "error", "canplay"].forEach(function (ev) {
@@ -285,6 +285,16 @@
           btn.classList.add("is-active");
           var out = $('[data-selected="' + name + '"]');
           if (out) out.textContent = btn.getAttribute("data-value") || btn.textContent.trim();
+          // cập nhật giá theo biến thể được chọn
+          var price = Number(btn.getAttribute("data-price") || 0);
+          if (price > 0) {
+            var input = $("#qtyInput");
+            if (input) { input.setAttribute("data-unit", price); }
+            var priceEl = $(".price-box .price");
+            if (priceEl) priceEl.textContent = money(price);
+            var syncFn = input && input._sync;
+            if (typeof syncFn === "function") syncFn();
+          }
         });
       });
     });
@@ -298,8 +308,8 @@
   function initQty() {
     var input = $("#qtyInput");
     if (!input) return;
-    var unit = Number(input.getAttribute("data-unit") || 0);
     function sync() {
+      var unit = Number(input.getAttribute("data-unit") || 0);
       var q = Math.max(1, Math.min(99, parseInt(input.value, 10) || 1));
       input.value = q;
       var totalEl = $("#formTotal");
@@ -307,6 +317,7 @@
       var sb = $("#sbPrice");
       if (sb) sb.textContent = money(unit * q);
     }
+    input._sync = sync;
     $$(".qty button").forEach(function (b) {
       b.addEventListener("click", function () {
         var cur = parseInt(input.value, 10) || 1;
@@ -679,6 +690,7 @@
         utmCampaign: attr("utm_campaign"),
         utmContent: attr("utm_content"),
         fbclid: attr("fbclid"),
+        shop: CFG.shop || "",
         referrer: document.referrer || ""
       };
 
