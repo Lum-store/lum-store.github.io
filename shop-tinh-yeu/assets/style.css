@@ -59,10 +59,9 @@ button { font: inherit; cursor: pointer; }
 .header-in { display: flex; align-items: center; gap: 10px; height: 60px; }
 .logo { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 20px; letter-spacing: -.03em; }
 .logo-mark {
-  width: 30px; height: 30px; border-radius: 10px; flex: none;
-  background: linear-gradient(135deg, var(--brand), var(--brand-2));
-  display: grid; place-items: center; color: #fff; font-size: 15px; font-weight: 900;
-  box-shadow: 0 6px 14px rgba(255, 77, 28, .35);
+  width: 36px; height: 36px; border-radius: 50%; flex: none;
+  object-fit: cover; border: 2px solid var(--brand);
+  box-shadow: 0 4px 10px rgba(255, 77, 28, .3);
 }
 .logo small { display: block; font-size: 9.5px; font-weight: 600; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
 .header-nav { display: none; gap: 22px; margin-left: 26px; font-size: 14px; font-weight: 600; color: var(--ink-2); }

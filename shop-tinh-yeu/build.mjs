@@ -94,9 +94,8 @@ ${image ? `<meta property="og:image" content="${esc(image)}">` : ""}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="${base}/assets/style.css?v=${ASSET_VER}">
-<link rel="icon" href="data:image/svg+xml,${encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="26" fill="#ff4d1c"/><text x="50" y="70" font-size="58" font-family="Arial" font-weight="bold" fill="#fff" text-anchor="middle">L</text></svg>'
-  )}">
+<link rel="icon" href="${base}/assets/img/shop-avatar.jpg">
+<link rel="apple-touch-icon" href="${base}/assets/img/shop-avatar.jpg">
 <script>
 window.LUM_CONFIG = ${JSON.stringify({ brand: B.name, phone: B.phone, sheetEndpoint: B.sheetEndpoint || "", shop: B.shop || "" })};
 ${B.fbPixel ? `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${esc(B.fbPixel)}');fbq('track','PageView');` : ""}
@@ -110,7 +109,7 @@ function header(base) {
 <header class="header">
   <div class="container header-in">
     <a class="logo" href="${base}/index.html">
-      <span class="logo-mark">L</span>
+      <img class="logo-mark" src="${base}/assets/img/shop-avatar.jpg" alt="${esc(B.name)}">
       <span>${esc(B.name)}<small>${esc(B.tagline)}</small></span>
     </a>
     <nav class="header-nav">
@@ -134,7 +133,7 @@ function footer(base) {
   <div class="container footer-grid">
     <div>
       <div class="logo" style="margin-bottom:10px">
-        <span class="logo-mark">L</span>
+        <img class="logo-mark" src="${base}/assets/img/shop-avatar.jpg" alt="${esc(B.name)}">
         <span>${esc(B.name)}<small>${esc(B.tagline)}</small></span>
       </div>
       <p>Chuyên hàng tiêu dùng chọn lọc, giá tận gốc. Giao toàn quốc, thanh toán khi nhận hàng.</p>
