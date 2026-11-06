@@ -1,0 +1,12 @@
+﻿# Secrets / local state
+data/products.json.bak
+*.cookies
+.env
+
+# Node
+node_modules/
+
+# OS
+Thumbs.db
+.DS_Store
+*.log

@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quản trị · Lụm Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css">
+<link rel="stylesheet" href="/assets/admin.css">
+</head>
+<body class="admin-body">
+
+<header class="adm-header">
+  <div class="adm-wrap adm-header-in">
+    <div class="adm-brand">
+      <span class="logo-mark">L</span>
+      <div><b>Quản trị shop</b><small>Sửa giá · ảnh · mô tả</small></div>
+    </div>
+    <nav class="adm-tabs">
+      <button class="adm-tab is-active" data-tab="products">Sản phẩm</button>
+      <button class="adm-tab" data-tab="settings">Cài đặt chung</button>
+    </nav>
+    <div class="adm-actions">
+      <a class="adm-btn ghost" href="/" target="_blank">Xem web ↗</a>
+      <button class="adm-btn primary" id="saveBtn">Lưu thay đổi</button>
+    </div>
+  </div>
+</header>
+
+<div class="adm-wrap adm-main">
+  <!-- ============ PRODUCTS ============ -->
+  <section id="tab-products" class="adm-tabpane">
+    <aside class="adm-side">
+      <div class="adm-side-head">Danh sách sản phẩm <span id="pcount">0</span></div>
+      <input id="searchBox" class="adm-search" type="search" placeholder="Tìm theo tên…">
+      <div id="prodList" class="adm-list"></div>
+      <button class="adm-btn ghost adm-full" id="addBtn">+ Thêm sản phẩm</button>
+
+      <div class="adm-import">
+        <label>Nhập từ link 1688</label>
+        <div class="adm-inline">
+          <input id="importUrl" type="url" placeholder="https://detail.1688.com/offer/…">
+          <button class="adm-btn ghost sm" id="importBtn" type="button">Lấy</button>
+        </div>
+        <p class="adm-muted sm" id="importMsg">Tự lấy tên, giá, ảnh, mô tả</p>
+      </div>
+    </aside>
+
+    <div class="adm-editor" id="editor">
+      <div class="adm-empty" id="emptyState">Chọn 1 sản phẩm bên trái để sửa</div>
+
+      <div id="editorBody" hidden>
+        <div class="adm-row2">
+          <div>
+            <h2 class="adm-h2" id="edTitle">Sản phẩm</h2>
+            <p class="adm-muted" id="edSlug"></p>
+          </div>
+          <div class="adm-inline">
+            <button class="adm-btn ghost sm" id="dupBtn" type="button">⧉ Nhân bản</button>
+            <button class="adm-btn ghost sm" id="delBtn" type="button">🗑 Xoá</button>
+          </div>
+          <div class="adm-inline">
+            <label class="adm-switch"><input type="checkbox" id="edActive" checked> Hiện trên web</label>
+          </div>
+        </div>
+
+        <!-- IMAGES -->
+        <div class="adm-block">
+          <div class="adm-block-head">
+            <h3>Ảnh sản phẩm <span class="adm-count" id="imgCount">0</span></h3>
+            <span class="adm-muted">Ảnh đầu tiên là ảnh chính · kéo thả ảnh vào đây để tải lên · kéo ảnh để đổi thứ tự</span>
+          </div>
+          <div class="adm-images" id="imageGrid"></div>
+          <div class="adm-drop" id="dropZone">
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+            <span>Kéo ảnh vào đây hoặc</span>
+            <button class="adm-btn primary sm" id="pickBtn" type="button">Chọn ảnh từ máy</button>
+            <span class="adm-muted sm">(hoặc Ctrl+V để dán ảnh)</span>
+          </div>
+          <div class="adm-progress" id="uploadProgress" hidden></div>
+        </div>
+
+        <!-- VIDEO -->
+        <div class="adm-block">
+          <div class="adm-block-head">
+            <h3>Video sản phẩm</h3>
+            <span class="adm-muted">Tự phát khi mở trang (muted, lặp lại) · nên dùng MP4 dọc/vuông, dưới 20MB · nhớ upload kèm thư mục assets/videos khi đưa lên host</span>
+          </div>
+          <div class="adm-video" id="videoBox"></div>
+          <div class="adm-inline">
+            <input type="file" id="videoInput" accept="video/mp4,video/webm" hidden>
+            <button class="adm-btn ghost sm" id="videoPick" type="button">Tải video lên</button>
+            <button class="adm-btn ghost sm" id="videoDel" type="button">Xoá video</button>
+            <span class="adm-muted sm" id="videoName"></span>
+          </div>
+          <div class="adm-progress" id="videoProgress" hidden></div>
+        </div>
+
+        <!-- BASIC -->
+        <div class="adm-block">
+          <h3>Thông tin cơ bản</h3>
+          <div class="adm-field">
+            <label>Tên sản phẩm</label>
+            <input id="edName" type="text" placeholder="VD: Bình giữ nhiệt 500ml inox 304">
+          </div>
+          <div class="adm-field">
+            <label>Mô tả ngắn (1 dòng dưới tên)</label>
+            <input id="edSubtitle" type="text" placeholder="VD: Giữ nóng 12h · Kèm túi chống sốc">
+          </div>
+          <div class="adm-grid3">
+            <div class="adm-field">
+              <label>Giá bán (đ)</label>
+              <input id="edPrice" type="number" min="0" step="1000" placeholder="199000">
+            </div>
+            <div class="adm-field">
+              <label>Giá gốc (đ) <span class="adm-muted">để trống nếu không giảm</span></label>
+              <input id="edOldPrice" type="number" min="0" step="1000" placeholder="399000">
+            </div>
+            <div class="adm-field">
+              <label>Đã bán</label>
+              <input id="edSold" type="number" min="0" step="1" placeholder="1200">
+            </div>
+          </div>
+          <div class="adm-grid3">
+            <div class="adm-field">
+              <label>Nhãn (badge)</label>
+              <input id="edBadge" type="text" placeholder="VD: Bán chạy / Freeship">
+            </div>
+            <div class="adm-field">
+              <label>Sắp xếp</label>
+              <div class="adm-inline">
+                <button class="adm-btn ghost sm" id="moveUp" type="button">↑ Lên</button>
+                <button class="adm-btn ghost sm" id="moveDown" type="button">↓ Xuống</button>
+              </div>
+            </div>
+            <div class="adm-field">
+              <label>Mã 1688 (tham khảo)</label>
+              <input id="edOfferId" type="text" placeholder="1049972189982">
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIANTS -->
+        <div class="adm-block">
+          <div class="adm-block-head">
+            <h3>Phân loại / biến thể</h3>
+            <span class="adm-muted">Ví dụ: Phân loại: Đen (49.000đ), Trắng (49.000đ), Combo 10 cái (99.000đ). Mỗi biến thể có giá + số cái/gói riêng.</span>
+          </div>
+          <div id="variantList"></div>
+          <button class="adm-btn ghost sm" id="addVariant" type="button">+ Thêm nhóm phân loại</button>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="adm-block">
+          <div class="adm-block-head">
+            <h3>Mô tả sản phẩm</h3>
+            <span class="adm-muted">Soạn như word · dán ảnh trực tiếp vào khung</span>
+          </div>
+          <div class="adm-toolbar">
+            <button type="button" data-cmd="bold"><b>B</b></button>
+            <button type="button" data-cmd="italic"><i>I</i></button>
+            <button type="button" data-cmd="underline"><u>U</u></button>
+            <button type="button" data-cmd="formatBlock" data-val="h3">Tiêu đề</button>
+            <button type="button" data-cmd="insertUnorderedList">• Danh sách</button>
+            <button type="button" data-cmd="removeFormat">Xoá định dạng</button>
+          </div>
+          <div class="adm-editor-area" id="edDesc" contenteditable="true" data-placeholder="Mô tả công dụng, chất liệu, kích thước, hướng dẫn dùng…"></div>
+        </div>
+
+        <!-- SPECS -->
+        <div class="adm-block">
+          <div class="adm-block-head">
+            <h3>Thông số</h3>
+            <span class="adm-muted">Hiển thị dạng bảng dưới phần mô tả</span>
+          </div>
+          <div id="specList"></div>
+          <button class="adm-btn ghost sm" id="addSpec" type="button">+ Thêm thông số</button>
+        </div>
+
+        <div class="adm-savebar">
+          <div class="adm-muted" id="saveState">Chưa có thay đổi</div>
+          <div class="adm-inline">
+            <a class="adm-btn ghost" id="previewLink" href="/" target="_blank">Xem trang sản phẩm ↗</a>
+            <button class="adm-btn primary" id="saveBtn2">Lưu &amp; cập nhật web</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="tab-settings" class="adm-tabpane" hidden>
+    <div class="adm-editor full">
+      <h2 class="adm-h2">Cài đặt chung</h2>
+      <p class="adm-muted">Thông tin này hiện ở header, footer, nút gọi và form đặt hàng.</p>
+
+      <div class="adm-grid2">
+        <div class="adm-field"><label>Tên shop</label><input id="bName" type="text"></div>
+        <div class="adm-field"><label>Slogan</label><input id="bTagline" type="text"></div>
+        <div class="adm-field"><label>Số điện thoại (dùng để gọi)</label><input id="bPhone" type="tel" placeholder="0982467019"></div>
+        <div class="adm-field"><label>SĐT hiển thị</label><input id="bPhoneDisplay" type="tel" placeholder="0982 467 019"></div>
+        <div class="adm-field"><label>Link Zalo</label><input id="bZalo" type="url" placeholder="https://zalo.me/0982467019"></div>
+        <div class="adm-field"><label>Link Messenger</label><input id="bMessenger" type="url" placeholder="https://m.me/tenpage"></div>
+        <div class="adm-field"><label>Email</label><input id="bEmail" type="email" placeholder="hotro@shop.vn"></div>
+        <div class="adm-field"><label>Địa chỉ shop</label><input id="bAddress" type="text"></div>
+      </div>
+
+      <hr class="adm-hr">
+      <h3 class="adm-h3">Nhận đơn hàng</h3>
+      <div class="adm-field">
+        <label>Google Apps Script URL (dán link Web App đã deploy)</label>
+        <input id="bSheet" type="url" placeholder="https://script.google.com/macros/s/XXXX/exec">
+        <p class="adm-muted sm">Xem file <b>HUONG-DAN-GOOGLE-SHEET.md</b> trong thư mục dự án để tạo link này (làm 1 lần).</p>
+      </div>
+      <div class="adm-field">
+        <label>Facebook Pixel ID</label>
+        <input id="bPixel" type="text" placeholder="123456789012345">
+        <p class="adm-muted sm">Dán ID Pixel là web tự bắn PageView / ViewContent / Purchase.</p>
+      </div>
+
+      <div class="adm-savebar">
+        <div class="adm-muted" id="saveState2">Chưa có thay đổi</div>
+        <button class="adm-btn primary" id="saveBtn3">Lưu &amp; cập nhật web</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="adm-toast" id="toast"></div>
+<script src="/assets/admin.js"></script>
+</body>
+</html>

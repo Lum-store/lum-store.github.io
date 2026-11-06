@@ -1,0 +1,125 @@
+{
+  "brand": {
+    "name": "Shop Tình Yêu",
+    "tagline": "Sản phẩm chăm sóc sức khỏe & hạnh phúc · Giao discreet",
+    "phone": "0982467019",
+    "phoneDisplay": "0982 467 019",
+    "zalo": "https://zalo.me/0982467019",
+    "messenger": "https://m.me/shoptinhyeu",
+    "email": "hotro@shoptinhyeu.vn",
+    "address": "Hà Nội",
+    "sheetEndpoint": "https://script.google.com/macros/s/AKfycbzNQ9Neiyrie5w6OQFu_LAz6MfSfgszlPtmGEOjYSBCfm2hlCIatzBsWF3-S3H1I7Hs/exec",
+    "fbPixel": "1703978720960096",
+    "currency": "đ",
+    "shop": "cup",
+    "heroEyebrow": "🔥 Sản phẩm bán chạy · Giao discreet 100%",
+    "heroTitle": "Cốc Silicone Y Tế Cao Cấp<br><em>Mềm mịn · An toàn · Kín đáo</em>",
+    "heroDesc": "Chế tác từ silicone y tế cao cấp, thiết kế bình sữa kín đáo, lực hút chân không chân thật. Giao hỏa tốc & bảo mật — không ai đoán ra bên trong.",
+    "heroCta": "Xem chi tiết & đặt hàng",
+    "sectionTitle": "Sản phẩm nổi bật",
+    "sectionDesc": "Bấm vào sản phẩm để xem chi tiết và đặt hàng",
+    "desc": "Cốc Silicone Y Tế Cao Cấp — mềm mịn như nhung, an toàn tuyệt đối, kín đáo tuyệt đối. Giao toàn quốc, kiểm hàng trước khi thanh toán, đổi trả 7 ngày."
+  },
+  "products": [
+    {
+      "slug": "coc-silicone-y-te-cao-cap",
+      "offerId": "1088218716132",
+      "name": "Cốc Silicone Y Tế Cao Cấp",
+      "subtitle": "Silicone y tế mềm mịn như nhung · 2 size · Kín đáo tuyệt đối · Lực hút chân không chân thật",
+      "price": 299000,
+      "oldPrice": 599000,
+      "sold": 6200,
+      "badge": "Bán chạy",
+      "active": true,
+      "images": [
+        "assets/img/coc-silicone-y-te-cao-cap/SaveTik.io_7701976228848209170_1.jpeg",
+        "assets/img/coc-silicone-y-te-cao-cap/SaveTik.io_7701976228848209170_2.jpeg",
+        "assets/img/coc-silicone-y-te-cao-cap/SaveTik.io_7701976228848209170_3.jpeg",
+        "assets/img/coc-silicone-y-te-cao-cap/SaveTik.io_7701976228848209170_4.jpeg",
+        "assets/img/coc-silicone-y-te-cao-cap/screenshot_1793793923.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/screenshot_1793793981.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/screenshot_1793794147.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/screenshot_1793794381.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/screenshot_1793794245.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/gel/gel-8.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/gel/gel-4.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/gel/gel-1.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/gel/gel-3.webp",
+        "assets/img/coc-silicone-y-te-cao-cap/gel/gel-5.webp"
+      ],
+      "variants": [
+        {
+          "name": "Chọn combo",
+          "options": [
+            {
+              "value": "Combo 1: 1 Cốc + 1 Gel 30ml (gel 100k)",
+              "price": 299000,
+              "oldPrice": 699000,
+              "count": 1
+            },
+            {
+              "value": "Combo 2: 2 Cốc + 3 Gel 30ml (gel 300k)",
+              "price": 599000,
+              "oldPrice": 1498000,
+              "count": 1
+            },
+            {
+              "value": "Combo 3: 3 Gel 30ml riêng (Freeship)",
+              "price": 199000,
+              "oldPrice": 300000,
+              "count": 1
+            }
+          ]
+        }
+      ],
+      "specs": [
+        {
+          "k": "Chất liệu",
+          "v": "Silicone y tế cao cấp (TPE)"
+        },
+        {
+          "k": "Thiết kế",
+          "v": "Dạng bình sữa, kín đáo, nhỏ gọn"
+        },
+        {
+          "k": "Kích thước",
+          "v": "13.3cm × 5.5cm × 3.5cm"
+        },
+        {
+          "k": "Trọng lượng",
+          "v": "106g (size nhỏ) / 210g (size lớn)"
+        },
+        {
+          "k": "Lực hút",
+          "v": "Chân không, kích thích đa chiều"
+        },
+        {
+          "k": "Bảo quản",
+          "v": "Rửa nước ấm, để khô tự nhiên, bảo quản nơi khô thoáng"
+        },
+        {
+          "k": "Phù hợp",
+          "v": "Nam giới trưởng thành"
+        },
+        {
+          "k": "Bao bì",
+          "v": "Hộp kín đáo 2 lớp, che 100% tên sản phẩm"
+        }
+      ],
+      "description": "<p>Cốc Silicone Y Tế Cao Cấp — chất liệu mềm mịn như da, an toàn tuyệt đối cho cơ thể, kín đáo khó ai đoán ra bên trong. Thiết kế dạng bình sữa nhỏ gọn, dễ cất giấu và mang theo, không ai đoán ra được đây là sản phẩm gì.</p>\n\n<h3>✨ Tính năng nổi bật</h3>\n<ul>\n<li><b>Chất liệu silicone y tế cao cấp (TPE)</b>: an toàn tuyệt đối cho cơ thể, mềm mịn như da thật, không thô ráp, dễ vệ sinh sau mỗi lần sử dụng.</li>\n<li><b>Kết cấu gai chân thật + lực hút chân không</b>: ôm khít và kích thích đa chiều, mang đến khoái cảm mãnh liệt và chân thật như thật.</li>\n<li><b>2 size lựa chọn</b>: size nhỏ 106g (nhỏ gọn, dễ mang theo) và size lớn 210g (lực hút mạnh hơn, trải nghiệm sâu hơn).</li>\n<li><b>Thiết kế bình sữa kín đáo</b>: không ai đoán ra bên trong là gì — riêng tư tuyệt đối, cất giấu dễ dàng.</li>\n<li><b>Dễ vệ sinh</b>: rửa bằng nước ấm, để khô tự nhiên, bảo quản nơi khô thoáng.</li>\n<li><b>Hộp đóng kín 2 lớp</b>: che 100% tên sản phẩm, được kiểm tra hàng trước khi thanh toán.</li>\n</ul>\n\n<h3>📦 Combo ưu đãi</h3>\n<ul>\n<li><b>Combo 1</b> — 1 Cốc (giá gốc 599k) + 1 Gel 30ml (giá gốc 100k) = <b>699.000đ</b> → bán <b>299.000đ</b> (tiết kiệm 400k)</li>\n<li><b>Combo 2</b> — 2 Cốc (giá gốc 2×599k=1.198k) + 3 Gel 30ml (giá gốc 300k) = <b>1.498.000đ</b> → bán <b>599.000đ</b> (tiết kiệm 899k)</li>\n<li><b>Combo 3</b> — 3 lọ Gel 30ml riêng (giá gốc 300k) → bán <b>199.000đ</b> (freeship, tiết kiệm 101k)</li>\n</ul>\n<p>Gel bôi trơn chính hãng LEZHIXI, thành phần an toàn (Glycerin, Propylene Glycol, Sodium Hyaluronate), không mùi, không màu, phù hợp cho mọi loại da. Giá gel mua lẻ: <b>100.000đ/lọ 30ml</b>.</p>\n\n<h3>📋 Cách sử dụng</h3>\n<ul>\n<li><b>Bước 1:</b> Làm sạch sản phẩm và tay thật kỹ. Thoa gel bôi trơn chuyên dụng trước khi sử dụng.</li>\n<li><b>Bước 2:</b> Thả lỏng và đưa vào nhẹ nhàng, tận hưởng cảm giác ôm khít cùng lực hút chân không.</li>\n<li><b>Bước 3:</b> Vệ sinh sản phẩm bằng nước ấm sau khi dùng, để khô tự nhiên và bảo quản nơi khô thoáng.</li>\n</ul>\n\n<h3>🛡️ Cam kết & Chính sách</h3>\n<ul>\n<li><b>Chất liệu an toàn</b>: silicone y tế cao cấp, không chứa chất độc hại, an toàn cho cơ thể.</li>\n<li><b>Giao discreet</b>: đóng gói hộp kín đáo 2 lớp, che 100% tên sản phẩm, không ai đoán ra bên trong.</li>\n<li><b>Kiểm hàng trước thanh toán</b>: được kiểm tra hàng trước khi nhận và thanh toán.</li>\n<li><b>Giao hỏa tốc</b>: Hà Nội & TP.HCM nhận 1–2 ngày (tỉnh 2–3 ngày).</li>\n<li><b>Đổi trả</b>: 7 ngày nếu sản phẩm có lỗi hoặc không đúng như quảng cáo.</li>\n<li><b>Hỗ trợ</b>: giải đáp thắc mắc và khiếu nại 24/7.</li>\n</ul>\n\n\n\n<h3>🎁 Quà tặng Gel bôi trơn chính hãng — Hàng chuẩn Nhật Bản</h3>\n<p>Mỗi combo đều tặng kèm <b>Gel bôi trơn cao cấp LEZHIXI</b> — sản phẩm đạt tiêu chuẩn Nhật Bản, thành phần an toàn tuyệt đối, không mùi, không màu, không gây kích ứng. Gel được sản xuất theo công nghệ Nhật, đạt chứng nhận an toàn quốc tế, phù hợp cho mọi loại da.</p>\n\n<h4>✨ Vì sao Gel LEZHIXI là quà tặng lý tưởng?</h4>\n<ul>\n<li><b>Hàng chuẩn Nhật Bản</b>: sản xuất theo công nghệ và tiêu chuẩn Nhật, đạt chứng nhận an toàn quốc tế (CE, FDA). Chất lượng vượt trội so với gel thông thường.</li>\n<li><b>Thành phần an toàn</b>: Glycerin, Propylene Glycol, Sodium Hyaluronate (HA) — dưỡng ẩm sâu, bảo vệ da, không gây kích ứng.</li>\n<li><b>Không mùi, không màu</b>: không chứa hương liệu nhân tạo, không gây dị ứng, phù hợp cho mọi loại da nhạy cảm.</li>\n<li><b>Độ trơn tối ưu</b>: công thức đặc biệt tăng độ trơn tự nhiên, giảm ma sát, tăng khoái cảm và bảo vệ silicone cup khỏi mài mòn.</li>\n<li><b>Dễ rửa sạch</b>: tan trong nước, rửa sạch bằng nước ấm, không để lại cặn.</li>\n<li><b>Đa dụng</b>: dùng được cho cả nam và nữ, phù hợp cho mọi hoạt động riêng tư.</li>\n<li><b>Đóng gói tiện lợi</b>: tuýp 30ml nhỏ gọn, dễ mang theo, nắp vặn kín, không rò rỉ.</li>\n</ul>\n\n<h4>📦 Thông số Gel LEZHIXI</h4>\n<ul>\n<li><b>Thương hiệu</b>: LEZHIXI (chuẩn Nhật Bản)</li>\n<li><b>Thể tích</b>: 30ml (tuýp nhỏ gọn)</li>\n<li><b>Thành phần</b>: Glycerin, Propylene Glycol, Sodium Hyaluronate</li>\n<li><b>Mùi</b>: Không mùi</li>\n<li><b>Màu</b>: Không màu (trong suốt)</li>\n<li><b>Bảo quản</b>: Nơi khô thoáng, tránh ánh nắng trực tiếp, tránh nhiệt độ cao</li>\n<li><b>Hạn sử dụng</b>: 3 năm từ ngày sản xuất</li>\n<li><b>Chứng nhận</b>: CE, FDA, ISO 9001</li>\n</ul>\n\n<h4>🎁 Combo ưu đãi</h4>\n<ul>\n<li><b>Combo 1</b> — 1 Cốc: <b>299.000đ</b> (tặng 1 lọ Gel 30ml chính hãng trị giá 100k + Freeship)</li>\n<li><b>Combo 2</b> — 2 Cốc: <b>599.000đ</b> (tặng 3 lọ Gel 30ml chính hãng trị giá 300k + Freeship)</li>\n</ul>\n<p><i>Giá gel mua lẻ: 30ml = 60k/lọ. Khi mua combo, bạn tiết kiệm được 40k (Combo 1) hoặc 180k (Combo 2) so với mua riêng lẻ.</i></p>\n\n<h4>💡 Cách dùng Gel với Cốc Silicone</h4>\n<ul>\n<li><b>Bước 1</b>: Làm sạch cốc silicone và tay thật kỹ bằng nước ấm.</li>\n<li><b>Bước 2</b>: Thoa một lượng Gel vừa đủ lên bề mặt cốc và cơ thể.</li>\n<li><b>Bước 3</b>: Sử dụng cốc silicone theo hướng dẫn. Gel giúp tăng độ trơn, giảm ma sát, tăng khoái cảm.</li>\n<li><b>Bước 4</b>: Sau khi dùng, rửa cốc bằng nước ấm + xà phòng nhẹ, để khô tự nhiên. Bảo quản nơi khô thoáng.</li>\n</ul>\n\n<p style=\"text-align:center;margin-top:12px\"><b>🎁 Gel LEZHIXI — Hàng chuẩn Nhật, an toàn tuyệt đối, tăng khoái cảm gấp đôi!</b></p>\n\n<h3>❓ Câu hỏi thường gặp</h3>\n<ul>\n<li><b>Sản phẩm có an toàn không?</b> — Chất liệu silicone y tế cao cấp, an toàn cho cơ thể, đã được kiểm định.</li>\n<li><b>Có kín đáo không?</b> — Hộp đóng kín 2 lớp, che 100% tên sản phẩm. Giao discreet, không ai đoán ra.</li>\n<li><b>Có được kiểm tra hàng trước khi thanh toán không?</b> — Có, bạn được kiểm tra hàng trước khi thanh toán.</li>\n<li><b>Đổi trả như thế nào?</b> — Đổi trả trong vòng 7 ngày nếu sản phẩm có lỗi hoặc không đúng như quảng cáo.</li>\n<li><b>Giao hàng mất bao lâu?</b> — Hà Nội & TP.HCM: 1–2 ngày. Các tỉnh: 2–3 ngày.</li>\n<li><b>Có freeship không?</b> — Freeship cho đơn từ 299K. Cả 2 combo đều được freeship.</li>\n</ul>\n\n<p style=\"text-align:center;margin-top:16px\"><b>🛒 Đặt hàng ngay hôm nay — giao discreet, bảo mật 100%!</b></p>",
+      "cny": 0,
+      "video": "assets/videos/coc-silicone-y-te-cao-cap.mp4",
+      "videoPoster": "assets/videos/coc-silicone-y-te-cao-cap.jpg",
+      "reviewConfig": {
+        "rating": 4.9,
+        "total": 1900,
+        "fivePct": 95,
+        "fourPct": 5,
+        "threeCount": 0,
+        "twoCount": 0,
+        "oneCount": 0
+      },
+      "reviewTheme": "cupping"
+    }
+  ]
+}
