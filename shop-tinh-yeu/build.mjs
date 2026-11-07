@@ -181,8 +181,7 @@ function card(p) {
     <div class="card-body">
       <h3 class="card-title">${esc(p.name)}</h3>
       <div class="card-price">
-        <span class="price">${money(p.price)}</span>
-        ${p.oldPrice > p.price ? `<span class="price-old">${money(p.oldPrice)}</span>` : ""}
+        <span class="card-slots">🔥 Chỉ còn 59 suất ưu đãi cuối cùng</span>
       </div>
       <div class="card-meta">
         <span>${stars(5)}</span><span class="dot"></span><span>Đã bán ${Number(p.sold || 0).toLocaleString("vi-VN")}</span>
@@ -551,8 +550,11 @@ ${footer(base)}
   </div>
 </div>
 
-<div class="floating-cta" id="floatingCTA">
-  <div class="fcta-price">299.000đ</div>
+<div class="floating-cta show" id="floatingCTA">
+  <div class="fcta-left">
+    <div class="fcta-cta">⚡ Nhanh tay đặt ngay!</div>
+    <div class="fcta-slots">🔥 Chỉ còn <b id="fctaSlots">59</b> suất</div>
+  </div>
   <button class="fcta-btn" type="button">Đặt hàng ngay</button>
 </div>
 

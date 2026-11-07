@@ -730,6 +730,7 @@
         if (totalEl) totalEl.textContent = money(unit);
         openModal(code, order.total);
         track("Purchase", { value: order.total, currency: "VND", content_name: order.product });
+        track("CompleteRegistration", { content_name: order.product, status: "completed" });
         if (!r.ok && r.reason === "no-endpoint") {
           toast("Đơn đã lưu. Chưa cấu hình Google Sheet.");
         }

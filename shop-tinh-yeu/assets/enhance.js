@@ -116,20 +116,61 @@
   function initFloatingCTA() {
     var bar = document.getElementById('floatingCTA');
     if (!bar) return;
-    var shown = false;
-    function onScroll() {
-      var y = window.scrollY || window.pageYOffset;
-      if (y > 600 && !shown) { bar.classList.add('show'); shown = true; }
-      else if (y <= 600 && shown) { bar.classList.remove('show'); shown = false; }
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    // Always visible
+    bar.classList.add('show');
     // click scrolls to order form
     var btn = bar.querySelector('.fcta-btn');
     if (btn) btn.addEventListener('click', function () {
       var f = document.getElementById('orderFormWrap') || document.getElementById('orderForm');
       if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
+
+    // Slots countdown: 59 -> 10 over 3 minutes, then flash 10 continuously
+    var slotsEl = document.getElementById('fctaSlots');
+    var slotsWrap = bar.querySelector('.fcta-slots');
+    if (slotsEl) {
+      var slotsKey = 'shop_slots_start_v2';
+      var slotsStart = localStorage.getItem(slotsKey);
+      if (!slotsStart) {
+        slotsStart = Date.now();
+        localStorage.setItem(slotsKey, slotsStart);
+      }
+      slotsStart = parseInt(slotsStart, 10);
+      var totalMs = 3 * 60 * 1000; // 3 minutes
+      var startSlots = 59;
+      var endSlots = 10;
+      var totalSlots = startSlots - endSlots; // 49 steps
+      var prevSlots = -1;
+      function updateSlots() {
+        var elapsed = Date.now() - slotsStart;
+        var remaining;
+        if (elapsed >= totalMs) {
+          remaining = endSlots; // stay at 10
+        } else {
+          remaining = startSlots - Math.floor((elapsed / totalMs) * totalSlots);
+          if (remaining < endSlots) remaining = endSlots;
+          if (remaining > startSlots) remaining = startSlots;
+        }
+        slotsEl.textContent = remaining;
+        // Flash on each -1 decrement
+        if (remaining !== prevSlots && prevSlots !== -1) {
+          slotsWrap.classList.remove('flash');
+          void slotsWrap.offsetWidth; // trigger reflow
+          slotsWrap.classList.add('flash');
+          setTimeout(function () { slotsWrap.classList.remove('flash'); }, 600);
+        }
+        // Flash continuously when at 10
+        if (remaining <= endSlots) {
+          slotsWrap.classList.remove('flash');
+          slotsWrap.classList.add('flash-continuous');
+        } else {
+          slotsWrap.classList.remove('flash-continuous');
+        }
+        prevSlots = remaining;
+      }
+      updateSlots();
+      setInterval(updateSlots, 1000);
+    }
   }
 
   /* ---------- 4. Popup form ---------- */
@@ -184,12 +225,6 @@
         };
         if (sheetUrl) {
           try { navigator.sendBeacon(sheetUrl, new Blob([JSON.stringify(order)], { type: 'text/plain;charset=utf-8' })); } catch (e) {}
-          fetch(sheetUrl, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(order)
-          }).catch(function () {});
         }
         // Hiện popup cảm ơn
         var ty = document.getElementById('popupThankYou');
@@ -197,9 +232,10 @@
           ty.classList.add('show');
           document.body.style.overflow = 'hidden';
           setTimeout(function () { ty.classList.remove('show'); document.body.style.overflow = ''; }, 5000);
-        } else {
-          if (window.lumToast) window.lumToast('Đã nhận thông tin! Shop sẽ liên hệ bạn trong 15 phút.');
-          else alert('Đã nhận thông tin! Shop sẽ liên hệ bạn trong 15 phút.');
+        }
+        // FB Pixel: CompleteRegistration
+        if (typeof window.fbq === 'function') {
+          window.fbq('track', 'CompleteRegistration', { content_name: 'Cốc Silicone Y Tế Cao Cấp', status: 'completed' });
         }
         form.reset();
         close();
